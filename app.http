@@ -1,0 +1,82 @@
+//scenario1
+GET http://localhost:3000/todos/?status=TO%20DO
+
+
+###
+//scenario2
+GET http://localhos:3000/todos/?priority=HIGH
+###
+
+//scenario 3
+
+GET http://localhost:3000/todos/?priority=HIGH&status=IN%20PROGRESS
+
+###
+//scenario4
+
+GET http://localhost:3000/todos/?search_q=Buy
+
+###
+//scenario 5
+
+
+GET http://localhost:3000/todos/?category=WORK&status=DONE
+
+###
+//scenario 6
+
+GET http://localhost:3000/todos/?category=HOME
+
+###
+//scenario 7
+
+GET http://localhost:3000/todos/?category=LEARNING&priority=HIGH
+
+###
+//API 2
+
+GET http://localhost:3000/todos/:todoId/
+
+###
+//API 3
+
+GET http://localhost:3000/agenda/
+
+###
+//Api 4
+
+POST http://localhost:3000/todos/
+
+###
+//api 5
+
+PUT http://localhost:3000/todos/:todoId/
+
+
+###
+//scenario1
+
+PUT http://localhost:3000/todos/:todoId/?status=DONE
+
+###
+//scenario2
+
+PUT http://localhost:3000/todos/:todoId/?priority=HIGH
+
+###
+//scenario3
+PUT http://localhost:3000/todos/:todoId/?todo=cleanthegarden
+
+###
+//scenario4
+
+PUT http://localhost:3000/todos/:todoId/?category=LEARNING
+
+###
+//scenario 5
+
+PUT http://localhost:3000/todos/:todoId/?dueDate=2021-01-12
+
+###
+//api 6
+DELETE http://localhost:3000/todos/3/
