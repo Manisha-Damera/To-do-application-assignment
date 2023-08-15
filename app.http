@@ -38,6 +38,14 @@ GET http://localhost:3000/todos/?category=LEARNING&priority=HIGH
 GET http://localhost:3000/todos/:todoId/
 
 ###
+
+GET http://localhost:3000/todos/?category=WATCH
+###
+GET http://localhost:3000/todos/?priority=AVERAGE
+###
+
+GET http://localhost:3000/todos/?status=NONE
+###
 //API 3
 
 GET http://localhost:3000/agenda/
@@ -46,6 +54,7 @@ GET http://localhost:3000/agenda/
 //Api 4
 
 POST http://localhost:3000/todos/
+
 
 Content-Type: application/json
 

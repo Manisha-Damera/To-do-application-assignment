@@ -4,6 +4,10 @@ const sqlite3 = require("sqlite3");
 const path = require("path");
 const dbPath = path.join(__dirname, "todoApplication.db");
 const app = express();
+const isMatch = require("date-fns/isMatch");
+const format = require("date-fns/format");
+
+const isValid = require("date-fns/isValid");
 app.use(express.json());
 
 let db = null;
@@ -135,7 +139,7 @@ app.get("/todos/", async (request, response) => {
         ) {
           getToDosQuery = `SELECT * 
             FROM todo WHERE 
-            category='${category} AND priority='${priority}';`;
+            category='${category}' AND priority='${priority}';`;
           data = await db.all(getToDosQuery);
           response.send(data.map((eachItem) => outputResult(eachItem)));
         } else {
@@ -165,12 +169,12 @@ app.get("/todos/", async (request, response) => {
       if (priority === "HIGH" || priority === "MEDIUM" || priority === "LOW") {
         getToDosQuery = `SELECT * FROM todo 
                         WHERE
-                 priority=${priority};`;
+                 priority='${priority}';`;
         data = await db.all(getToDosQuery);
         response.send(data.map((eachItem) => outputResult(eachItem)));
       } else {
         response.status(400);
-        response.send("Invalid Todo priority");
+        response.send("Invalid Todo Priority");
       }
 
       break;
@@ -196,7 +200,7 @@ app.get("/todos/", async (request, response) => {
         response.send(data.map((eachItem) => outputResult(eachItem)));
       } else {
         response.status(400);
-        response.send("Invalid Todo category");
+        response.send("Invalid Todo Category");
       }
       break;
     //scenario 4
@@ -221,7 +225,7 @@ WHERE id='${todoId}';`;
 //Api 3
 app.get("/agenda/", async (request, response) => {
   const { date } = request.query;
-  console.log(isMatch(date, "yyyy-M-dd"));
+  console.log(isMatch(date, "yyyy-MM-dd"));
   if (isMatch(date, "yyyy-MM-dd")) {
     const newDate = format(new Date(date), "yyyy-MM-dd");
     console.log(newDate);
@@ -250,7 +254,7 @@ app.post("/todos/", async (request, response) => {
     dueDate,
   } = newApplicationDetails;
   if (priority === "HIGH" || priority === "LOW" || priority === "MEDIUM") {
-    if (status === "To Do" || status === "IN PROGRESS" || status === "DONE") {
+    if (status === "TO DO" || status === "IN PROGRESS" || status === "DONE") {
       if (
         category === "WORK" ||
         category === "HOME" ||
@@ -261,10 +265,10 @@ app.post("/todos/", async (request, response) => {
 
           const postNewDetailsQuery = `INSERT INTO
     todo(id,todo,priority,status,category,due_date)
-    VALUES ('${id}','${todo}','${priority}','${status}','${category}','${postNewDueDate}');`;
+    VALUES (${id},'${todo}','${priority}','${status}','${category}','${postNewDueDate}');`;
 
-          await db.run(postNewDetailsQuery);
-          // const newApp=dbResponse.lastID;
+          const dbResponse = await db.run(postNewDetailsQuery);
+          // const newApp = dbResponse.lastID;
           response.send("Todo Successfully Added");
         } else {
           response.status(400);
